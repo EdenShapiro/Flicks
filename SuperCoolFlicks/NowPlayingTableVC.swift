@@ -11,12 +11,14 @@ import AFNetworking
 
 class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
-    var movieList: [[String: Any]] = [[String: Any]]()
+    @IBOutlet weak var networkErrorLabel: UILabel!
     
+    var movieList: [[String: Any]] = [[String: Any]]()
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        networkErrorLabel.isHidden = true
         
         fetchMovies(successCallBack: {dic in
             self.movieList = dic
@@ -25,7 +27,7 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
             self.tableView.reloadData()
         }, errorCallBack: {err in
             print("There was an error: \(err.debugDescription)")
-            //display error message
+            self.networkErrorLabel.isHidden = false
             })
         
     }
@@ -93,34 +95,31 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let movieDetailsVC = MovieDetailsVC()
-        movieDetailsVC.movie = movieList[indexPath.row]
-        
-//        if let posterPath = movie["poster_path"] as? String {
-//            let posterBaseUrl = "http://image.tmdb.org/t/p/w500"
-//            let posterUrl = NSURL(string: posterBaseUrl + posterPath)
-//            cell.posterView.setImageWithURL(posterUrl!)
-//        }
-//        else {
-//            // No poster image. Can either set to nil (no image) or a default movie poster image
-//            // that you include as an asset
-//            cell.posterView.image = nil
-//        }
-
-        
-                
-        self.navigationController!.pushViewController(movieDetailsVC, animated: true)
-        
-//            let url = URL(string: "https://image.tmdb.org/t/p/w640/l1yltvzILaZcx2jYvc5sEMkM7Eh.jpg")
-//            movieDetailsVC.movieImageView.setImageWith(url!)
-//            movieDetailsVC.movieTitleLabel.text = "Jaws"
-//            movieDetailsVC.movieDescriptionLabel.text = "An insatiable great white shark terrorizes the townspeople of Amity Island, The police chief, an oceanographer and a grizzled shark hunter seek to destroy the bloodthirsty beast."
-        
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("in prep for segue")
+        let movieDetailsVC = segue.destination as! MovieDetailsVC
+        print(sender.debugDescription)
+        if let cell = sender as? MovieTableViewCell, let indexPath = tableView.indexPath(for: cell) {
+            print("inside of if let")
+            movieDetailsVC.movie = movieList[indexPath.row]
+        }
     }
     
+    //            let url = URL(string: "https://image.tmdb.org/t/p/w640/l1yltvzILaZcx2jYvc5sEMkM7Eh.jpg")
+    //            movieDetailsVC.movieImageView.setImageWith(url!)
+    //            movieDetailsVC.movieTitleLabel.text = "Jaws"
+    //            movieDetailsVC.movieDescriptionLabel.text = "An insatiable great white shark terrorizes the townspeople of Amity Island, The police chief, an oceanographer and a grizzled shark hunter seek to destroy the bloodthirsty beast."
     
+    //        if let posterPath = movie["poster_path"] as? String {
+    //            let posterBaseUrl = "http://image.tmdb.org/t/p/w500"
+    //            let posterUrl = NSURL(string: posterBaseUrl + posterPath)
+    //            cell.posterView.setImageWithURL(posterUrl!)
+    //        }
+    //        else {
+    //            // No poster image. Can either set to nil (no image) or a default movie poster image
+    //            // that you include as an asset
+    //            cell.posterView.image = nil
+    //        }
 
 
 }

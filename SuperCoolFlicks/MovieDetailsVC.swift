@@ -20,51 +20,42 @@ class MovieDetailsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let posterImagePath = movie["poster_path"] as? String else {
-            print("There was an error getting poster_path")
+        if let posterImagePath = movie["poster_path"] as? String {
+            let imageURL = URL(string: Constants.TMDBConstants.imagePath + posterImagePath)
+            self.movieImageView.setImageWith(imageURL!)
+        } else {
             self.movieImageView.image = nil
-            return
         }
-        let imageURL = URL(string: Constants.TMDBConstants.imagePath + posterImagePath)
-        print(imageURL ?? "No URL found")
-        self.movieImageView.setImageWith(imageURL!)
         
-        guard let movieTitle = movie["title"] as? String else {
-            print("There was an error getting title")
-            return
+        if let movieTitle = movie["title"] as? String {
+            self.movieTitleLabel.text = movieTitle
+        } else {
+            self.movieTitleLabel.text = ""
         }
-        self.movieTitleLabel.text = movieTitle
         
-        guard let movieDescription = movie["overview"] as? String else {
-            print("There was an error getting overview")
-            return
+        if let movieDescription = movie["overview"] as? String {
+            self.movieDescriptionLabel.text = movieDescription
+        } else {
+            self.movieDescriptionLabel.text = ""
         }
-        self.movieDescriptionLabel.text = movieDescription
-
-        
-        
-        
-        
-        
-        
         
         
         let contentWidth = scrollView.bounds.width
         let contentHeight = scrollView.bounds.height * 3
         scrollView.contentSize = CGSize(width: contentWidth, height: contentHeight)
-        let subviewHeight = CGFloat(120)
-        var currentViewOffset = CGFloat(0);
+//        let subviewHeight = CGFloat(120)
+//        var currentViewOffset = CGFloat(0);
         
-        while currentViewOffset < contentHeight {
-            let frame = CGRect(x: 0, y: currentViewOffset, width: contentWidth, height: subviewHeight)
-//            0, currentViewOffset, contentWidth, subviewHeight).rectByInsetting(dx: 5, dy: 5)
-            let hue = currentViewOffset/contentHeight
-            let subview = UIView(frame: frame)
-            subview.backgroundColor = UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
-            scrollView.addSubview(subview)
-            
-            currentViewOffset += subviewHeight
-        }
+//        while currentViewOffset < contentHeight {
+//            let frame = CGRect(x: 0, y: currentViewOffset, width: contentWidth, height: subviewHeight)
+////            0, currentViewOffset, contentWidth, subviewHeight).rectByInsetting(dx: 5, dy: 5)
+//            let hue = currentViewOffset/contentHeight
+//            let subview = UIView(frame: frame)
+//            subview.backgroundColor = UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
+//            scrollView.addSubview(subview)
+//            
+//            currentViewOffset += subviewHeight
+//        }
         
 //        let gradient: CAGradientLayer = CAGradientLayer()
 //        gradient.frame = imageView.frame
