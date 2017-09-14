@@ -1,19 +1,18 @@
 //
-//  ViewController.swift
+//  TopRatedTableVC.swift
 //  SuperCoolFlicks
 //
-//  Created by Eden on 9/12/17.
+//  Created by Eden on 9/14/17.
 //  Copyright © 2017 Eden Shapiro. All rights reserved.
 //
 
 import UIKit
-import AFNetworking
 import KRProgressHUD
 
-class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate {
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var collectionView: UICollectionView!
+class TopRatedTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+
     @IBOutlet weak var networkErrorLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
     var movieList: [[String: Any]] = [[String: Any]]()
@@ -23,11 +22,8 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        collectionView.delegate = self
-        collectionView.dataSource = self
         searchBar.delegate = self
-        
-        tableView.isHidden = true
+        //        searchBar.barTintColor = UIColor.black
         networkErrorLabel.isHidden = true
         
         KRProgressHUD.set(style: .white)
@@ -45,7 +41,7 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
             self.networkErrorLabel.isHidden = false
             KRProgressHUD.set(font: .systemFont(ofSize: 15))
             KRProgressHUD.showError(withMessage: "Unable to load movies.")
-            })
+        })
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
@@ -64,7 +60,7 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
-
+    
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
         fetchMovies(successCallBack: {arrayOfDicts in
             self.movieList = arrayOfDicts
@@ -78,7 +74,7 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
             KRProgressHUD.showError(withMessage: "Unable to load movies.")
             refreshControl.endRefreshing()
         })
-
+        
     }
     
     func fetchMovies(successCallBack: @escaping ([[String: Any]]) -> (), errorCallBack: ((Error?) -> ())?) {
@@ -106,8 +102,6 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
         });
         task.resume()
     }
-    
-//    =========================================== TableView Methods ===========================================
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.filteredMovieList.count
@@ -144,9 +138,6 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.deselectRow(at: indexPath, animated:true)
     }
     
-    //    =========================================== Other Methods ===========================================
-
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("in prep for segue")
         let movieDetailsVC = segue.destination as! MovieDetailsVC
@@ -161,40 +152,7 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredMovieList = searchText.isEmpty ? movieList : movieList.filter { (item: [String: Any]) -> Bool in
             return (item["title"] as! String).range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
-        }        
+        }
         tableView.reloadData()
     }
-
-}
-
-
-extension NowPlayingTableVC: UICollectionViewDataSource {
-
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.filteredMovieList.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath as IndexPath) as! MovieCollectionViewCell
-
-        // set imageView and labels
-        let currentMovieDic = filteredMovieList[indexPath.row]
-        guard let posterImagePath = currentMovieDic["poster_path"] as? String else {
-            print("There was an error getting poster_path")
-            return cell
-        }
-        let url = URL(string: Constants.TMDBConstants.imagePath + posterImagePath)
-        cell.movieImageView.setImageWith(url!)
-        
-        guard let movieTitle = currentMovieDic["title"] as? String else {
-            print("There was an error getting title")
-            return cell
-        }
-        cell.movieTitleLabel.text = movieTitle
-       
-        
-        return cell
-
-    }
-    
 }

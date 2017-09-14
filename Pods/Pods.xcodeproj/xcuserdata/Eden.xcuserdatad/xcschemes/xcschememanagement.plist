@@ -9,6 +9,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>KRActivityIndicatorView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>KRProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-SuperCoolFlicks.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,6 +37,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>9C4AED8E7F0E8047550BDB01102B0913</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B779E37A0FD7BB8291538648184EFEED</key>
 		<dict>
 			<key>primary</key>
@@ -42,7 +57,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FF955C21279627D6D32A2E6DDAD7EF36</key>
+		<key>D0FC6DFCECB5FE4F2D3D55CD7600A667</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DBF6426868E6CA9AA6D5A4C0BAF80A9F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

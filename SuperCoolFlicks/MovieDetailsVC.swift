@@ -38,35 +38,24 @@ class MovieDetailsVC: UIViewController {
         } else {
             self.movieDescriptionLabel.text = ""
         }
-        
+    
         
         let contentWidth = scrollView.bounds.width
         let contentHeight = scrollView.bounds.height * 3
         scrollView.contentSize = CGSize(width: contentWidth, height: contentHeight)
-//        let subviewHeight = CGFloat(120)
-//        var currentViewOffset = CGFloat(0);
         
-//        while currentViewOffset < contentHeight {
-//            let frame = CGRect(x: 0, y: currentViewOffset, width: contentWidth, height: subviewHeight)
-////            0, currentViewOffset, contentWidth, subviewHeight).rectByInsetting(dx: 5, dy: 5)
-//            let hue = currentViewOffset/contentHeight
-//            let subview = UIView(frame: frame)
-//            subview.backgroundColor = UIColor(hue: hue, saturation: 1, brightness: 1, alpha: 1)
-//            scrollView.addSubview(subview)
-//            
-//            currentViewOffset += subviewHeight
-//        }
         
-//        let gradient: CAGradientLayer = CAGradientLayer()
-//        gradient.frame = imageView.frame
-//        gradient.colors = [UIColor.black.cgColor, UIColor.clear.cgColor]
-//        gradient.locations = [0.0, 0.1]
-//        imageView.layer.insertSublayer(gradient, at: 0)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let gradient: CAGradientLayer = CAGradientLayer()
+        gradient.frame = movieImageView.frame
+        gradient.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        gradient.locations = [0.5, 1]
+        movieImageView.layer.insertSublayer(gradient, at: 0)
+        
     }
     
 

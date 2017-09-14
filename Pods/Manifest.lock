@@ -14,13 +14,19 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - KRActivityIndicatorView (2.0.2)
+  - KRProgressHUD (3.0.0):
+    - KRActivityIndicatorView (~> 2.0.2)
 
 DEPENDENCIES:
   - AFNetworking
+  - KRProgressHUD
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  KRActivityIndicatorView: 2a9d5442ba8da6274db3afdf46aeaef7cf6dd8ad
+  KRProgressHUD: 14f9fad06080bdb1e59569104a8eda654c83e813
 
-PODFILE CHECKSUM: 7bc8d9ea21e62feba0f4f35fcd9c6f8cfeab8828
+PODFILE CHECKSUM: 09c17deb33400602bb254dd19592e7d6a6d19483
 
 COCOAPODS: 1.2.0

@@ -7,6 +7,7 @@ target 'SuperCoolFlicks' do
 
   # Pods for SuperCoolFlicks
   pod 'AFNetworking'
+  pod 'KRProgressHUD'
 
   target 'SuperCoolFlicksTests' do
     inherit! :search_paths
