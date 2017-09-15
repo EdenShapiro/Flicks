@@ -15,6 +15,7 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var networkErrorLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     var movieList: [[String: Any]] = [[String: Any]]()
     var filteredMovieList: [[String: Any]] = [[String: Any]]()
@@ -26,8 +27,9 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
         collectionView.delegate = self
         collectionView.dataSource = self
         searchBar.delegate = self
-        
-        tableView.isHidden = true
+
+        segmentedControl.removeBorders()
+        collectionView.isHidden = true
         networkErrorLabel.isHidden = true
         
         KRProgressHUD.set(style: .white)
@@ -39,6 +41,7 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
             self.movieList = arrayOfDicts
             self.filteredMovieList = arrayOfDicts
             self.tableView.reloadData()
+            self.collectionView.reloadData()
             KRProgressHUD.showSuccess(withMessage: "Success!")
         }, errorCallBack: {err in
             print("There was an error: \(err.debugDescription)")
@@ -54,15 +57,15 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
+//    }
+//    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        self.navigationController?.setNavigationBarHidden(false, animated: false)
+//    }
     
 
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
@@ -70,6 +73,7 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
             self.movieList = arrayOfDicts
             self.filteredMovieList = arrayOfDicts
             self.tableView.reloadData()
+            self.collectionView.reloadData()
             refreshControl.endRefreshing()
         }, errorCallBack: {err in
             print("There was an error: \(err.debugDescription)")
@@ -146,6 +150,20 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
     
     //    =========================================== Other Methods ===========================================
 
+    @IBAction func segmentedControlValueChanged(_ sender: Any) {
+        switch segmentedControl.selectedSegmentIndex {
+            case 0:
+                collectionView.isHidden = true
+                tableView.isHidden = false
+            case 1:
+                tableView.isHidden = true
+                collectionView.isHidden = false
+            default:
+                break
+        }
+    }
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("in prep for segue")
@@ -163,6 +181,7 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
             return (item["title"] as! String).range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
         }        
         tableView.reloadData()
+        collectionView.reloadData()
     }
 
 }
@@ -198,3 +217,48 @@ extension NowPlayingTableVC: UICollectionViewDataSource {
     }
     
 }
+
+extension UISegmentedControl {
+    func removeBorders() {
+        setBackgroundImage(imageWithColor(color: backgroundColor!), for: .normal, barMetrics: .default)
+        setBackgroundImage(imageWithColor(color: tintColor!), for: .selected, barMetrics: .default)
+        setDividerImage(imageWithColor(color: UIColor.clear), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+    }
+    
+    // create a 1x1 image with this color
+    private func imageWithColor(color: UIColor) -> UIImage {
+        let rect = CGRect(x: 0.0, y:  0.0, width: 1.0, height: 1.0)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        context!.setFillColor(color.cgColor);
+        context!.fill(rect);
+        let image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return image!
+    }
+}
+//extension UISearchBar {
+//    
+//    private func getViewElement<T>(type: T.Type) -> T? {
+//        
+//        let svs = subviews.flatMap { $0.subviews }
+//        guard let element = (svs.filter { $0 is T }).first as? T else { return nil }
+//        return element
+//    }
+//    
+//    func setTextFieldColor(color: UIColor) {
+//        
+//        if let textField = getViewElement(type: UITextField.self) {
+//            switch searchBarStyle {
+//            case .minimal:
+//                textField.layer.backgroundColor = color.cgColor
+//                textField.layer.cornerRadius = 6
+//                
+//            case .prominent, .default:
+//                textField.backgroundColor = color
+//            }
+//        }
+//    }
+//}
+
+//        searchBar.setTextFieldColor(color: UIColor.lightGray)

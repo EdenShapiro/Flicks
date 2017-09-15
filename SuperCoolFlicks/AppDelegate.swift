@@ -22,6 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
         UINavigationBar.appearance().isTranslucent = true
         
+        
+//        UITabBar.appearance().tintColor = UIColor.lightGray.withAlphaComponent(0.5)
+        UITabBar.appearance().backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+
+
+        
         return true
     }
 
