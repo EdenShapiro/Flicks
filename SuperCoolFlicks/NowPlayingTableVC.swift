@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  NowPlayingTableVC.swift
 //  SuperCoolFlicks
 //
 //  Created by Eden on 9/12/17.
@@ -10,13 +10,16 @@ import UIKit
 import AFNetworking
 import KRProgressHUD
 
-class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate {
+class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDelegate, UIScrollViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var networkErrorLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
+    var loadingMoreView = UIActivityIndicatorView(activityIndicatorStyle: .white)
+    var isMoreDataLoading = false
     var movieList: [[String: Any]] = [[String: Any]]()
     var filteredMovieList: [[String: Any]] = [[String: Any]]()
     
@@ -28,15 +31,32 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
         collectionView.dataSource = self
         searchBar.delegate = self
 
-        segmentedControl.removeBorders()
         collectionView.isHidden = true
         networkErrorLabel.isHidden = true
         
+        segmentedControl.removeBorders()
+    
+        flowLayout.minimumLineSpacing = 6
+        flowLayout.minimumInteritemSpacing = 2
+        
+        // Heads Up Display
         KRProgressHUD.set(style: .white)
         KRProgressHUD.set(font: .systemFont(ofSize: 15))
-        KRProgressHUD.set(activityIndicatorViewStyle: .gradationColor(head: .yellow, tail: .red))
+        KRProgressHUD.set(activityIndicatorViewStyle: .gradationColor(head: .red, tail: .yellow))
         KRProgressHUD.show(withMessage: "Loading movies...")
         
+        // Refresh indicator
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        tableView.insertSubview(refreshControl, at: 0)
+        
+        // Infinite scrolling indicator
+        let tableFooterView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50))
+        loadingMoreView.center = tableFooterView.center
+        tableFooterView.insertSubview(loadingMoreView, at: 0)
+        self.tableView.tableFooterView = tableFooterView
+        
+        // Load data
         fetchMovies(successCallBack: {arrayOfDicts in
             self.movieList = arrayOfDicts
             self.filteredMovieList = arrayOfDicts
@@ -50,67 +70,8 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
             KRProgressHUD.showError(withMessage: "Unable to load movies.")
             })
         
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
-        tableView.insertSubview(refreshControl, at: 0)
-        
-        
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        self.navigationController?.setNavigationBarHidden(true, animated: false)
-//    }
-//    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        self.navigationController?.setNavigationBarHidden(false, animated: false)
-//    }
-    
 
-    func refreshControlAction(_ refreshControl: UIRefreshControl) {
-        fetchMovies(successCallBack: {arrayOfDicts in
-            self.movieList = arrayOfDicts
-            self.filteredMovieList = arrayOfDicts
-            self.tableView.reloadData()
-            self.collectionView.reloadData()
-            refreshControl.endRefreshing()
-        }, errorCallBack: {err in
-            print("There was an error: \(err.debugDescription)")
-            self.networkErrorLabel.isHidden = false
-            KRProgressHUD.set(font: .systemFont(ofSize: 15))
-            KRProgressHUD.showError(withMessage: "Unable to load movies.")
-            refreshControl.endRefreshing()
-        })
-
-    }
-    
-    func fetchMovies(successCallBack: @escaping ([[String: Any]]) -> (), errorCallBack: ((Error?) -> ())?) {
-        let url = URL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")
-        var request = URLRequest(url: url!)
-        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
-        let session = URLSession(
-            configuration: URLSessionConfiguration.default,
-            delegate:nil,
-            delegateQueue:OperationQueue.main
-        )
-        
-        let task : URLSessionDataTask = session.dataTask(with: request, completionHandler:
-            { (dataOrNil, response, error) in
-                if let data = dataOrNil {
-                    
-                    let dictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                    successCallBack(dictionary["results"] as! [[String:Any]])
-                    
-                } else {
-                    if let error = error {
-                        errorCallBack?(error)
-                    }
-                }
-        });
-        task.resume()
-    }
-    
 //    =========================================== TableView Methods ===========================================
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -148,8 +109,51 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
         tableView.deselectRow(at: indexPath, animated:true)
     }
     
-    //    =========================================== Other Methods ===========================================
+//    =========================================== Other Methods ===========================================
 
+    func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        fetchMovies(successCallBack: {arrayOfDicts in
+            self.movieList = arrayOfDicts
+            self.filteredMovieList = arrayOfDicts
+            self.tableView.reloadData()
+            self.collectionView.reloadData()
+            refreshControl.endRefreshing()
+        }, errorCallBack: {err in
+            print("There was an error: \(err.debugDescription)")
+            self.networkErrorLabel.isHidden = false
+            KRProgressHUD.set(font: .systemFont(ofSize: 15))
+            KRProgressHUD.showError(withMessage: "Unable to load movies.")
+            refreshControl.endRefreshing()
+        })
+        
+    }
+    
+    func fetchMovies(successCallBack: @escaping ([[String: Any]]) -> (), errorCallBack: ((Error?) -> ())?) {
+        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=" + Constants.TMDBConstants.apiKey)
+        var request = URLRequest(url: url!)
+        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        let session = URLSession(
+            configuration: URLSessionConfiguration.default,
+            delegate:nil,
+            delegateQueue:OperationQueue.main
+        )
+        
+        let task : URLSessionDataTask = session.dataTask(with: request, completionHandler:
+            { (dataOrNil, response, error) in
+                if let data = dataOrNil {
+                    
+                    let dictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+                    successCallBack(dictionary["results"] as! [[String:Any]])
+                    
+                } else {
+                    if let error = error {
+                        errorCallBack?(error)
+                    }
+                }
+        });
+        task.resume()
+    }
+    
     @IBAction func segmentedControlValueChanged(_ sender: Any) {
         switch segmentedControl.selectedSegmentIndex {
             case 0:
@@ -164,12 +168,15 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("in prep for segue")
         let movieDetailsVC = segue.destination as! MovieDetailsVC
         print(sender.debugDescription)
         if let cell = sender as? MovieTableViewCell, let indexPath = tableView.indexPath(for: cell) {
+            print("inside of if let")
+            movieDetailsVC.movie = filteredMovieList[indexPath.row]
+        }
+        if let cell = sender as? MovieCollectionViewCell, let indexPath = collectionView.indexPath(for: cell) {
             print("inside of if let")
             movieDetailsVC.movie = filteredMovieList[indexPath.row]
         }
@@ -182,6 +189,37 @@ class NowPlayingTableVC: UIViewController, UITableViewDelegate, UITableViewDataS
         }        
         tableView.reloadData()
         collectionView.reloadData()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+                isMoreDataLoading = true
+                self.loadingMoreView.startAnimating()
+
+                fetchMovies(successCallBack: {arrayOfDicts in
+                    self.movieList = arrayOfDicts
+                    self.filteredMovieList = arrayOfDicts
+                    self.tableView.reloadData()
+                    self.collectionView.reloadData()
+                    self.isMoreDataLoading = false
+                    self.loadingMoreView.stopAnimating()
+                }, errorCallBack: {err in
+                    print("There was an error: \(err.debugDescription)")
+                    self.networkErrorLabel.isHidden = false
+                    KRProgressHUD.set(font: .systemFont(ofSize: 15))
+                    KRProgressHUD.showError(withMessage: "Unable to load movies.")
+                    self.isMoreDataLoading = false
+                    self.loadingMoreView.stopAnimating()
+                })
+            }
+        }
     }
 
 }
@@ -210,7 +248,6 @@ extension NowPlayingTableVC: UICollectionViewDataSource {
             return cell
         }
         cell.movieTitleLabel.text = movieTitle
-       
         
         return cell
 
@@ -262,3 +299,13 @@ extension UISegmentedControl {
 //}
 
 //        searchBar.setTextFieldColor(color: UIColor.lightGray)
+
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
+//    }
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        self.navigationController?.setNavigationBarHidden(false, animated: false)
+//    }

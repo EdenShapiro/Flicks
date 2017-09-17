@@ -14,7 +14,7 @@ class MovieDetailsVC: UIViewController {
     @IBOutlet weak var movieTitleLabel: UILabel!
     @IBOutlet weak var movieDescriptionLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var containerView: UIView!
+
     var movie: [String: Any]!
     
     override func viewDidLoad() {
@@ -38,13 +38,15 @@ class MovieDetailsVC: UIViewController {
         } else {
             self.movieDescriptionLabel.text = ""
         }
+        
+        
     
         
         let contentWidth = scrollView.bounds.width
         let contentHeight = scrollView.bounds.height * 3
         scrollView.contentSize = CGSize(width: contentWidth, height: contentHeight)
         
-        
+        self.navigationController?.navigationBar.tintColor = UIColor.red
     }
 
     override func viewDidLayoutSubviews() {

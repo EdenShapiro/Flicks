@@ -13,6 +13,7 @@
 		F206864E1F688F730026DB6B /* MovieDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F206864D1F688F730026DB6B /* MovieDetailsVC.swift */; };
 		F294C2C81F6B09FD007100A8 /* TopRatedTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F294C2C71F6B09FD007100A8 /* TopRatedTableVC.swift */; };
 		F294C2CA1F6B1099007100A8 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F294C2C91F6B1099007100A8 /* MovieCollectionViewCell.swift */; };
+		F29C2D551F6EEC2400D46579 /* FavoritesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29C2D541F6EEC2400D46579 /* FavoritesTableVC.swift */; };
 		F2AC541A1F68779C00169094 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2AC54191F68779C00169094 /* MovieTableViewCell.swift */; };
 		F2B9C3CC1F686CBB00295983 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B9C3CB1F686CBB00295983 /* AppDelegate.swift */; };
 		F2B9C3CE1F686CBB00295983 /* NowPlayingTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B9C3CD1F686CBB00295983 /* NowPlayingTableVC.swift */; };
@@ -53,6 +54,7 @@
 		F206864D1F688F730026DB6B /* MovieDetailsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailsVC.swift; sourceTree = "<group>"; };
 		F294C2C71F6B09FD007100A8 /* TopRatedTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopRatedTableVC.swift; sourceTree = "<group>"; };
 		F294C2C91F6B1099007100A8 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
+		F29C2D541F6EEC2400D46579 /* FavoritesTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableVC.swift; sourceTree = "<group>"; };
 		F2AC54191F68779C00169094 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		F2B9C3C81F686CBB00295983 /* SuperCoolFlicks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperCoolFlicks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2B9C3CB1F686CBB00295983 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +124,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		F29C2D5A1F6F1DFF00D46579 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F2B9C3CD1F686CBB00295983 /* NowPlayingTableVC.swift */,
+				F294C2C71F6B09FD007100A8 /* TopRatedTableVC.swift */,
+				F29C2D541F6EEC2400D46579 /* FavoritesTableVC.swift */,
+				F206864D1F688F730026DB6B /* MovieDetailsVC.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 		F2B9C3BF1F686CBA00295983 = {
 			isa = PBXGroup;
 			children = (
@@ -148,12 +161,10 @@
 			isa = PBXGroup;
 			children = (
 				F2B9C3CB1F686CBB00295983 /* AppDelegate.swift */,
-				F2B9C3CD1F686CBB00295983 /* NowPlayingTableVC.swift */,
-				F206864D1F688F730026DB6B /* MovieDetailsVC.swift */,
+				F29C2D5A1F6F1DFF00D46579 /* ViewControllers */,
 				F2AC54191F68779C00169094 /* MovieTableViewCell.swift */,
 				F2B9C3CF1F686CBB00295983 /* Main.storyboard */,
 				F294C2C91F6B1099007100A8 /* MovieCollectionViewCell.swift */,
-				F294C2C71F6B09FD007100A8 /* TopRatedTableVC.swift */,
 				F2F9EB101F68EF7A00FC52EB /* Constants.swift */,
 				F2B9C3D21F686CBB00295983 /* Assets.xcassets */,
 				F2B9C3D41F686CBB00295983 /* LaunchScreen.storyboard */,
@@ -469,6 +480,7 @@
 				F294C2C81F6B09FD007100A8 /* TopRatedTableVC.swift in Sources */,
 				F2B9C3CC1F686CBB00295983 /* AppDelegate.swift in Sources */,
 				F294C2CA1F6B1099007100A8 /* MovieCollectionViewCell.swift in Sources */,
+				F29C2D551F6EEC2400D46579 /* FavoritesTableVC.swift in Sources */,
 				F206864E1F688F730026DB6B /* MovieDetailsVC.swift in Sources */,
 				F2AC541A1F68779C00169094 /* MovieTableViewCell.swift in Sources */,
 			);

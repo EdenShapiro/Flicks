@@ -1,8 +1,8 @@
 //
-//  TopRatedTableVC.swift
+//  FavoritesTableVC.swift
 //  SuperCoolFlicks
 //
-//  Created by Eden on 9/14/17.
+//  Created by Eden on 9/17/17.
 //  Copyright © 2017 Eden Shapiro. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import KRProgressHUD
 import AFNetworking
 
-class TopRatedTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UICollectionViewDelegate, UIScrollViewDelegate {
+class FavoritesTableVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UICollectionViewDelegate, UIScrollViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var networkErrorLabel: UILabel!
@@ -129,7 +129,8 @@ class TopRatedTableVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     func fetchMovies(successCallBack: @escaping ([[String: Any]]) -> (), errorCallBack: ((Error?) -> ())?) {
-        let url = URL(string:"https://api.themoviedb.org/3/movie/top_rated?api_key=ce0b25be69b353afb6145f25747bdace")
+        let url = URL(string: "https://api.themoviedb.org/3/account/"+Constants.TMDBConstants.userID+"/favorite/movies?api_key="+Constants.TMDBConstants.apiKey+"&session_id="+Constants.TMDBConstants.sessionID)        
+        
         var request = URLRequest(url: url!)
         request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         let session = URLSession(
@@ -166,7 +167,7 @@ class TopRatedTableVC: UIViewController, UITableViewDataSource, UITableViewDeleg
             break
         }
     }
-
+    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -224,9 +225,9 @@ class TopRatedTableVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
 }
-
-
-extension TopRatedTableVC: UICollectionViewDataSource {
+    
+    
+extension FavoritesTableVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.filteredMovieList.count
@@ -256,3 +257,4 @@ extension TopRatedTableVC: UICollectionViewDataSource {
     }
     
 }
+
