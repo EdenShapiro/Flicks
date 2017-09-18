@@ -35,8 +35,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-Walkthrough  
-<img src='https://media.giphy.com/media/3ov9k8WHofhiIJZ0HK/giphy.gif' title='Walkthrough' width='' alt='Walkthrough' />
+[Walkthrough](https://media.giphy.com/media/3ov9k8WHofhiIJZ0HK/giphy.gif)
 
 Search  
 <img src='https://i.imgur.com/5fQTMRg.gif' title='Search Walkthrough' width='' alt='Search Walkthrough' />
