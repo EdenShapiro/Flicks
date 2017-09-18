@@ -71,9 +71,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-["List"](https://thenounproject.com/term/list/1244067) icon by Kavya from [the Noun Project](http://thenounproject.com/)
-["Grid"](https://thenounproject.com/term/grid/642523/) icon by Viktor Vorobyev from [the Noun Project](http://thenounproject.com/)
-["Heart"](https://thenounproject.com/term/heart/968105/) icon by i cons from [the Noun Project](http://thenounproject.com/)
-["Star"](https://thenounproject.com/term/star/797006/) by Vladimir Belochkin from [the Noun Project](http://thenounproject.com/)
-["Popcorn"](https://thenounproject.com/term/popcorn/706499/) by Cassandra Cappello from [the Noun Project](http://thenounproject.com/)
+["List"](https://thenounproject.com/term/list/1244067) icon by Kavya from [the Noun Project](http://thenounproject.com/)  
+["Grid"](https://thenounproject.com/term/grid/642523/) icon by Viktor Vorobyev from [the Noun Project](http://thenounproject.com/)  
+["Heart"](https://thenounproject.com/term/heart/968105/) icon by i cons from [the Noun Project](http://thenounproject.com/)  
+["Star"](https://thenounproject.com/term/star/797006/) by Vladimir Belochkin from [the Noun Project](http://thenounproject.com/)  
+["Popcorn"](https://thenounproject.com/term/popcorn/706499/) by Cassandra Cappello from [the Noun Project](http://thenounproject.com/)  
 
