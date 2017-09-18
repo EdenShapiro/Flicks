@@ -129,7 +129,7 @@ class TopRatedTableVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     }
     
     func fetchMovies(successCallBack: @escaping ([[String: Any]]) -> (), errorCallBack: ((Error?) -> ())?) {
-        let url = URL(string:"https://api.themoviedb.org/3/movie/top_rated?api_key=ce0b25be69b353afb6145f25747bdace")
+        let url = URL(string:"https://api.themoviedb.org/3/movie/top_rated?api_key=" + Constants.TMDBConstants.apiKey)
         var request = URLRequest(url: url!)
         request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         let session = URLSession(

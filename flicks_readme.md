@@ -2,7 +2,7 @@
 
 **SuperCoolFlicks** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **X** hours spent in total
+Time spent: **18** hours spent in total
 
 ## User Stories
 
@@ -19,27 +19,41 @@ The following **optional** features are implemented:
 - [x] Add a tab bar for **Now Playing** and **Top Rated** movies.
 - [x] Implement segmented control to switch between list view and grid view.
 - [x] Add a search bar.
-- [ ] All images fade in.
-- [ ] For the large poster, load the low-res image first, switch to high-res when complete.
-- [ ] Customize the highlight and selection effect of the cell.
+- [x] Customize the highlight and selection effect of the cell.
 - [x] Customize the navigation bar.
 
 The following **additional** features are implemented:
 
 - [x] Polished the UI by adding gradient layers
+- [x] Added infinite scrolling
+- [x] Added tab for favorite movies (according to hardcoded account ID. Login VC to be added later)
+- [x] Added specific movie details like rating, release date, and runtime (which required another data request)
+
 
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+Video Walkthrough
+<img src='https://i.imgur.com/yBxZU4H.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+Search
+<img src='https://i.imgur.com/5fQTMRg.gif' title='Search Walkthrough' width='' alt='Search Walkthrough' />
+
+Collection View Search
+<img src='https://i.imgur.com/oXgYl.gif' title='Collection Search' width='' alt='Collection View Search' />
+
+Network Error
+<img src='https://i.imgur.com/64F0lb4.gif' title='Collection Search' width='' alt='Collection View Search' />
+https://imgur.com/64F0lb4
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Very fun project to work on!
+
 
 ## License
 
@@ -56,3 +70,10 @@ Describe any challenges encountered while building the app.
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+
+    ["List"](https://thenounproject.com/term/list/1244067) icon by Kavya from [the Noun Project](http://thenounproject.com/)
+    ["Grid"](https://thenounproject.com/term/grid/642523/) icon by Viktor Vorobyev from [the Noun Project](http://thenounproject.com/)
+    ["Heart"](https://thenounproject.com/term/heart/968105/) icon by i cons from [the Noun Project](http://thenounproject.com/)
+    ["Star"](https://thenounproject.com/term/star/797006/) by Vladimir Belochkin from [the Noun Project](http://thenounproject.com/)
+    ["Popcorn"](https://thenounproject.com/term/popcorn/706499/) by Cassandra Cappello from [the Noun Project](http://thenounproject.com/)
+
