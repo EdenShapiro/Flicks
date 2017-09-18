@@ -1,4 +1,4 @@
-# Project 1 - *Name of App Here*
+# Project 1 - *SuperCoolFlicks*
 
 **SuperCoolFlicks** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
@@ -24,10 +24,10 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [x] Polished the UI by adding gradient layers
-- [x] Added infinite scrolling
-- [x] Added tab for favorite movies (according to hardcoded account ID. Login VC to be added later)
-- [x] Added specific movie details like rating, release date, and runtime (which required another data request)
+- [x] Polish the UI by adding gradient layers.
+- [x] Add infinite scrolling.
+- [x] Add tab for favorite movies (according to hardcoded account ID. Login VC to be added later).
+- [x] Add specific movie details like rating, release date, and runtime (which required another data request).
 
 
 
@@ -35,16 +35,16 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-Video Walkthrough
-<img src='https://i.imgur.com/yBxZU4H.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+Walkthrough  
+<img src='https://i.imgur.com/yBxZU4H.gif' title='Walkthrough' width='' alt='Walkthrough' />
 
-Search
+Search  
 <img src='https://i.imgur.com/5fQTMRg.gif' title='Search Walkthrough' width='' alt='Search Walkthrough' />
 
-Collection View Search
-<img src='https://i.imgur.com/oXgYl.gif' title='Collection Search' width='' alt='Collection View Search' />
+Collection View Search  
+<img src='https://i.imgur.com/8ObWSax.gif' title='Collection Search' width='' alt='Collection View Search' />
 
-Network Error
+Network Error  
 <img src='https://i.imgur.com/64F0lb4.gif' title='Collection Search' width='' alt='Collection View Search' />
 https://imgur.com/64F0lb4
 
