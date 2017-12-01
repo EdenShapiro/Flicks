@@ -1,6 +1,6 @@
-# Project 1 - *SuperCoolFlicks*
+# Project 1 - *Flicks*
 
-**SuperCoolFlicks** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
+**Flicks** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
 Time spent: **18** hours spent in total
 
